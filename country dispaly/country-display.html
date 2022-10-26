@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styling.css">
+    <title>Countries Display</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>All countries Display:</h1>
+        <div class="countries-dispaly"></div>
+    </div>
+
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                var responseJson = xmlHttp.responseText;
+                if (responseJson != null) {
+                    var responseData = JSON.parse(responseJson);
+                    var countries = "";
+                    responseData.forEach(element => {
+                        countries += "<div class='countries'><a target='_blank' href=" + element.maps.googleMaps + "><img  " + "src =" + element.flags.png + '></a><p class="capital">' + element.capital + '</p></div>';
+
+                    });
+                    document.querySelector(".countries-dispaly").innerHTML = countries;
+                }
+            }
+        }
+        xmlHttp.open("GET", "https://restcountries.com/v3.1/all", true);
+        xmlHttp.send();
+
+    </script>
+</body>
+
+</html>
